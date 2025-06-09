@@ -1,7 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const app = express();
-const { MongoClient, ServerApiVersion } = require('mongodb');
+const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
 const port = 3000;
 require('dotenv').config()
 app.use(cors());
@@ -25,6 +25,7 @@ async function run() {
 
     const foodCollection = client.db('FoodExpo').collection('Foods');
     //  Food API
+
     // get API
     app.get('/food', async (req, res) => {
       const result = await foodCollection.find().toArray();
@@ -36,16 +37,31 @@ async function run() {
       const nextFiveDate = new Date();
       nextFiveDate.setDate(new Date().getDate() + 5);
       const nextFiveDates = nextFiveDate.toISOString().slice(0, 10)
-      const type=req.query.type
-      let query ={}
-      if(type === 'expired'){
+      const type = req.query.type
+      let query = {}
+      let cursor
+      if (type === 'expired') {
         query = { expirydate: { $lt: today } };
+        cursor = foodCollection.find(query);
       }
-      else{
-        query = {expirydate: { $gte: today, $lte: nextFiveDates }}
+      else {
+        query = { expirydate: { $gte: today, $lte: nextFiveDates } }
+        cursor = foodCollection.find(query).limit(6)
       }
-      const result = await foodCollection.find(query).limit(6).toArray();
-      res.send(result);
+      const result = await cursor.toArray();
+      // add status ..
+      const data = result.map(item => {
+        const status = new Date(item.expirydate).toISOString().slice(0, 10) < today && 'Expired'
+        return { ...item, status }
+      })
+      res.send(data);
+    })
+     // get Details of food with ID
+    app.get('/food/:id', async (req, res) => {
+      const id = req.params.id;
+      const query = { _id: new ObjectId(id) };
+      const result = await foodCollection.findOne(query)
+      res.send(result)
     })
     // post API
     app.post('/food', async (req, res) => {
