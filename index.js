@@ -51,12 +51,12 @@ async function run() {
       const result = await cursor.toArray();
       // add status ..
       const data = result.map(item => {
-        const status = new Date(item.expirydate).toISOString().slice(0, 10) < today && 'Expired'
+        const status = new Date(item.expirydate).toISOString().slice(0, 10) < today ? 'Expired' : 'Nearly'
         return { ...item, status }
       })
       res.send(data);
     })
-     // get Details of food with ID
+    // get Details of food with ID
     app.get('/food/:id', async (req, res) => {
       const id = req.params.id;
       const query = { _id: new ObjectId(id) };
@@ -69,6 +69,18 @@ async function run() {
       console.log(foodData)
       const result = await foodCollection.insertOne(foodData);
       res.send(result)
+    })
+    // patch API
+    app.patch('/food/:id', async (req, res) => {
+    const id=req.params.id;
+    const filter={_id:new ObjectId(id)};
+    const updateDoc={
+      $set:{
+        noteData:req.body
+      }
+    }
+    const result=await foodCollection.updateOne(filter,updateDoc);
+    res.send(result)
     })
     // Send a ping to confirm a successful connection
     await client.db("admin").command({ ping: 1 });
