@@ -31,6 +31,7 @@ async function run() {
       const result = await foodCollection.find().toArray();
       res.send(result);
     })
+    
     // email query and jwt auth
     app.get('/food/email', async (req, res) => {
       const email = req.query.email;
@@ -70,6 +71,17 @@ async function run() {
       const result = await foodCollection.findOne(query)
       res.send(result)
     })
+    // put API
+    app.put('/food/:id', async (req, res) => {
+      const id = req.params.id;
+      const filter = { _id: new ObjectId(id) };
+      const update = req.body;
+      const updatefood={
+        $set:update
+      }
+      const result=await foodCollection.updateOne(filter,updatefood);
+      res.send(result)
+    })
     // post API
     app.post('/food', async (req, res) => {
       const foodData = req.body;
@@ -77,13 +89,7 @@ async function run() {
       const result = await foodCollection.insertOne(foodData);
       res.send(result)
     })
-    // put API
-    app.put('/food/email/:id', async (req, res) => {
-      const id = req.params.id;
-      const filter={_id:new ObjectId(id)};
-      const update=req.body;
-       const options = { upsert: true };
-    })
+    
     // patch API
     app.patch('/food/:id', async (req, res) => {
       const id = req.params.id;
@@ -93,7 +99,14 @@ async function run() {
           noteData: req?.body
         }
       }
-      const result = await foodCollection.updateOne(filter, updateDoc);
+      const result = await foodCollection.up(filter, updateDoc);
+      res.send(result)
+    })
+    // delete food items
+    app.delete('/food/:id',async(req,res)=>{
+      const id=req.params.id;
+      const query={_id:new ObjectId(id)};
+      const result=await foodCollection.deleteOne(query);
       res.send(result)
     })
     // Send a ping to confirm a successful connection
