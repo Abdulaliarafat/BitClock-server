@@ -31,6 +31,13 @@ async function run() {
       const result = await foodCollection.find().toArray();
       res.send(result);
     })
+    // email query and jwt auth
+    app.get('/food/email', async (req, res) => {
+      const email = req.query.email;
+      const query = { email: email }
+      const result = await foodCollection.find(query).toArray();
+      res.send(result)
+    })
     // get with Nearly expirydate and expirydate
     app.get('/food/nearly', async (req, res) => {
       const today = new Date().toISOString().slice(0, 10)
@@ -70,17 +77,24 @@ async function run() {
       const result = await foodCollection.insertOne(foodData);
       res.send(result)
     })
+    // put API
+    app.put('/food/email/:id', async (req, res) => {
+      const id = req.params.id;
+      const filter={_id:new ObjectId(id)};
+      const update=req.body;
+       const options = { upsert: true };
+    })
     // patch API
     app.patch('/food/:id', async (req, res) => {
-    const id=req.params.id;
-    const filter={_id:new ObjectId(id)};
-    const updateDoc={
-      $set:{
-        noteData:req.body
+      const id = req.params.id;
+      const filter = { _id: new ObjectId(id) };
+      const updateDoc = {
+        $set: {
+          noteData: req?.body
+        }
       }
-    }
-    const result=await foodCollection.updateOne(filter,updateDoc);
-    res.send(result)
+      const result = await foodCollection.updateOne(filter, updateDoc);
+      res.send(result)
     })
     // Send a ping to confirm a successful connection
     await client.db("admin").command({ ping: 1 });
