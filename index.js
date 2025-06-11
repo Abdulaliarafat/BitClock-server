@@ -25,13 +25,23 @@ async function run() {
 
     const foodCollection = client.db('FoodExpo').collection('Foods');
     //  Food API
-
+    // app.get('/food', async (req, res) => {
+    //   const result = await foodCollection.find().toArray();
+    //   res.send(result);
+    // })
     // get API
     app.get('/food', async (req, res) => {
-      const result = await foodCollection.find().toArray();
+      const search = req.query.search || ''
+      const query = {
+        $or: [
+          { foodtitle: { $regex: search, $options: 'i' } },
+          { foodcategory: { $regex: search, $options: 'i' } }
+        ]
+      }
+      const result = await foodCollection.find(query).toArray();
       res.send(result);
     })
-    
+
     // email query and jwt auth
     app.get('/food/email', async (req, res) => {
       const email = req.query.email;
@@ -76,10 +86,10 @@ async function run() {
       const id = req.params.id;
       const filter = { _id: new ObjectId(id) };
       const update = req.body;
-      const updatefood={
-        $set:update
+      const updatefood = {
+        $set: update
       }
-      const result=await foodCollection.updateOne(filter,updatefood);
+      const result = await foodCollection.updateOne(filter, updatefood);
       res.send(result)
     })
     // post API
@@ -89,7 +99,7 @@ async function run() {
       const result = await foodCollection.insertOne(foodData);
       res.send(result)
     })
-    
+
     // patch API
     app.patch('/food/:id', async (req, res) => {
       const id = req.params.id;
@@ -103,10 +113,10 @@ async function run() {
       res.send(result)
     })
     // delete food items
-    app.delete('/food/:id',async(req,res)=>{
-      const id=req.params.id;
-      const query={_id:new ObjectId(id)};
-      const result=await foodCollection.deleteOne(query);
+    app.delete('/food/:id', async (req, res) => {
+      const id = req.params.id;
+      const query = { _id: new ObjectId(id) };
+      const result = await foodCollection.deleteOne(query);
       res.send(result)
     })
     // Send a ping to confirm a successful connection
