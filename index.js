@@ -17,7 +17,41 @@ const client = new MongoClient(uri, {
     deprecationErrors: true,
   }
 });
+// firebase Admin
+const admin = require("firebase-admin");
 
+const serviceAccount = require("./firebase-admin-key.json");
+
+admin.initializeApp({
+  credential: admin.credential.cert(serviceAccount)
+});
+
+
+// verify firebase accessToken
+const verifyFirebaseAccessToken = async (req, res, next) => {
+  const authHeader = req.headers?.authorization
+  if (!authHeader || !authHeader.startsWith('Bearer ')) {
+    return res.status(401).send({ message: "Forbedden access" })
+  }
+  const token = authHeader.split(' ')[1]
+  const decoded = await admin.auth()
+  try {
+    const decoded = await admin.auth().verifyIdToken(token);
+    req.decoded = decoded
+    console.log(decoded)
+    next()
+  }
+  catch {
+   return res.status(403).send({ message: "Forbedden access" })
+  }
+}
+// verify email
+const verifyEmail=async(req,res,next)=>{
+  if(req.query.email !== req.decoded.email){
+    return res.status(403).send({message:"Unauthorized"})
+  }
+  next()
+}
 async function run() {
   try {
     // Connect the client to the server	(optional starting in v4.7)
@@ -29,7 +63,7 @@ async function run() {
     //   const result = await foodCollection.find().toArray();
     //   res.send(result);
     // })
-    // get API
+    // get API with search API
     app.get('/food', async (req, res) => {
       const search = req.query.search || ''
       const query = {
@@ -42,8 +76,8 @@ async function run() {
       res.send(result);
     })
 
-    // email query and jwt auth
-    app.get('/food/email', async (req, res) => {
+    // email query and jwt auth firebase
+    app.get('/food/email', verifyFirebaseAccessToken,verifyEmail, async (req, res) => {
       const email = req.query.email;
       const query = { email: email }
       const result = await foodCollection.find(query).toArray();
