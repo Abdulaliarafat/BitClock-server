@@ -1,43 +1,59 @@
 # 🛠️ BiteClock Server - Backend API
 
-This is the **server-side** of the BiteClock web app — a food expiry tracker system. It handles API requests, user-authenticated food management, and database operations using **Node.js**, **Express**, **MongoDB**, **CORS**, and **Firebase Admin SDK**.
+**BiteClock Server** is the RESTful backend for the BiteClock food expiry tracker app. It supports user-authenticated CRUD operations on food items, expiry tracking, and secure access using Firebase Admin.
 
 ---
 
-## 🔧 Features
+## 🌐 Live URLs
 
-- User authentication via Firebase Admin SDK
-- Add food items tied to user email
-- Get all food items with search by title/category/email
-- Retrieve:
-  - Nearly expired food (expiring in 5 days)
-  - Expired food
-- Update food items
-- Update food status (expired/nearly)
-- Delete expired food
-- Fully RESTful API
+🔴 Client: [https://assignment-11-client-side.netlify.app](https://assignment-11-client-side.netlify.app)  
+🟣 Server: [https://your-server.vercel.app](https://your-server.vercel.app) <!-- Replace with actual URL -->
 
 ---
 
-## 🌐 URLs
+## 🚀 Features
 
-👉 [Visit BiteClock client on Netlify](https://assignment-11-client-side.netlify.app/)
-👉 [Visit BiteClock Server on Vercel](https://your-netlify-url.netlify.app)
+- ✅ Firebase Admin-based token authentication
+- 🔐 Email verification before data access
+- 📝 Add, edit, delete food items
+- 🔍 Search food by title or category
+- 📅 Filter by expiry: expired or nearly expired (within 5 days)
+- 🧾 Attach notes to food items
+- ⚙️ RESTful API with clear route structure
 
-*(Replace above URLs with your actual deployed links)*
+---
+
+## 📁 API Endpoints
+
+| Method | Endpoint               | Description                                  |
+|--------|------------------------|----------------------------------------------|
+| GET    | `/food`                | Get all foods with optional search query     |
+| GET    | `/food/nearly`         | Get expired or nearly expired items          |
+| GET    | `/food/email?email=`   | Get items by user email (auth required)      |
+| GET    | `/food/:id`            | Get single item by ID                        |
+| POST   | `/food`                | Add a new food item                          |
+| PUT    | `/food/:id`            | Update an existing food item                 |
+| PATCH  | `/food/:id`            | Add/update note for a food item              |
+| DELETE | `/food/:id`            | Delete a food item                           |
 
 ---
 
 ## 🧰 Tech Stack
 
-- **Node.js** – JavaScript runtime
-- **Express.js** – Server framework
-- **MongoDB** – NoSQL database
-- **Firebase Admin SDK** – Email/user authentication
-- **CORS** – Cross-origin request handling
-- **dotenv** – Environment variable management
+| Technology           | Description                                  |
+|----------------------|----------------------------------------------|
+| ![Node.js](https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=node.js&logoColor=white) | JavaScript runtime              |
+| ![Express](https://img.shields.io/badge/Express.js-000000?style=for-the-badge&logo=express&logoColor=white) | Web server framework            |
+| ![MongoDB](https://img.shields.io/badge/MongoDB-4EA94B?style=for-the-badge&logo=mongodb&logoColor=white) | NoSQL database                  |
+| ![Firebase](https://img.shields.io/badge/Firebase_Admin-FFCA28?style=for-the-badge&logo=firebase&logoColor=black) | Authentication (admin access)  |
+| ![dotenv](https://img.shields.io/badge/dotenv-8DD6F9?style=for-the-badge&logo=dotenv&logoColor=black) | Environment variable management |
+| ![CORS](https://img.shields.io/badge/CORS-enabled-blue?style=for-the-badge) | Cross-origin request support    |
 
 ---
 
-## 📁 Project Structure
+## 💻 Getting Started Locally
+
+
+
+
 
