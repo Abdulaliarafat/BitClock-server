@@ -6,8 +6,8 @@
 
 ## 🌐 Live URLs
 
-🔴 Client: [https://assignment-11-client-side.netlify.app](https://assignment-11-client-side.netlify.app)  
-🟣 Server: [https://your-server.vercel.app](https://your-server.vercel.app) <!-- Replace with actual URL -->
+🔴 BiteClock Client: [https://assignment-11-client-side.netlify.app](https://assignment-11-client-side.netlify.app)  
+🟣 BiteClock Server: [https://your-server.vercel.app](https://your-server.vercel.app) <!-- Replace with actual URL -->
 
 ---
 
