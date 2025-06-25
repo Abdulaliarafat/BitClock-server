@@ -3,6 +3,14 @@
 **BiteClock Server** is the RESTful backend for the BiteClock food expiry tracker app. It supports user-authenticated CRUD operations on food items, expiry tracking, and secure access using Firebase Admin.
 
 ---
+## 🧑‍💻 Getting Started
+# git clone https://github.com/Abdulaliarafat/HobbyHub-server.git
+# cd HobbyHub-server
+# npm install
+# npm i express
+# http://localhost:3000
+# npm start
+---
 
 ## 🌐 Live URLs
 
