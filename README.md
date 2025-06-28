@@ -4,6 +4,7 @@
 
 ---
 ## 🧑‍💻 Getting Started
+
 # git clone https://github.com/Abdulaliarafat/BitClock-server.git
 # cd BitClock-server
 # npm install
@@ -59,12 +60,3 @@
 | ![Firebase](https://img.shields.io/badge/Firebase_Admin-FFCA28?style=for-the-badge&logo=firebase&logoColor=black) | Authentication (admin access)  |
 | ![dotenv](https://img.shields.io/badge/dotenv-8DD6F9?style=for-the-badge&logo=dotenv&logoColor=black) | Environment variable management |
 | ![CORS](https://img.shields.io/badge/CORS-enabled-blue?style=for-the-badge) | Cross-origin request support    |
-
----
-
-## 💻 Getting Started Locally
-
-
-
-
-
