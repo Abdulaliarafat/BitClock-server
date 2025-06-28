@@ -11,15 +11,14 @@
 # npm i express
 # http://localhost:3000
 # npm start
+
 ---
 
 ## 🌐 Live URLs
 
-🔴 BiteClock Client: https://assignment-11-client-side.netlify.app  
+🔴 Client: https://bitclock-client.netlify.app/ 
 
-🟣 BiteClock Server: https://your-server.vercel.app <!-- Replace with actual URL -->
-
-🔴 GitHub repo link: https://github.com/Abdulaliarafat/BitClock-server/tree/main
+🟣 Server: https://bitclock-server.vercel.app/
 
 ---
 
