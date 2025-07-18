@@ -55,6 +55,7 @@ const verifyEmail=async(req,res,next)=>{
 async function run() {
   try {
     // Connect the client to the server	(optional starting in v4.7)
+    
     // await client.connect();
 
     const foodCollection = client.db('FoodExpo').collection('Foods');
@@ -143,7 +144,7 @@ async function run() {
           noteData: req?.body
         }
       }
-      const result = await foodCollection.up(filter, updateDoc);
+      const result = await foodCollection.updateOne(filter, updateDoc);
       res.send(result)
     })
     // delete food items

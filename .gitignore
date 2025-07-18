@@ -3,4 +3,4 @@ node_modules
 .vercel
 .firebase-admin-key.json
 .keyConvert.js
-firebase-admin-key.json
+.firebase-admin-key.json
